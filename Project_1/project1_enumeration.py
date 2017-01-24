@@ -63,7 +63,7 @@ with open(exp_results_file, 'w') as fw:
     fw.write("")
 
 # Array for N sizes
-N = [100, 250, 500, 1000, 2500, 5000, 10000]
+N = [50, 100, 250, 500, 750, 1000, 2500, 5000, 7500, 10000]
 
 for ea in N:
     # Create array of random integers of size N
