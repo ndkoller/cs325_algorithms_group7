@@ -27,7 +27,6 @@ def MAXSUBARRAY_Enum(array):
     return array[max_i:max_j+1], max_sum
 
 
-
 # Algorithm 2: Better Enumeration
 def MAXSUBARRAY_BetterEnum(array):
     n = len(array)
@@ -44,6 +43,42 @@ def MAXSUBARRAY_BetterEnum(array):
                 max_j = j
     return array[max_i:max_j+1], max_sum
 
+
+# Common code to write results to output file
+def WRITERESULTS(data, subarray, maxsum, fileobject):
+    for ea in data:
+        fileobject.write(str(ea) + " ")
+    fileobject.write("\n")
+    for ea in subarray:
+        fileobject.write(str(ea) + " ")
+    fileobject.write("\n")
+    fileobject.write(str(maxsum) + "\n\n")
+
+
+# Common code to time the algorithms
+def RUNEXPERIMENT(alg, n_array, n_multiplier, output_file):
+    for ea in n_array:
+        # Create array of random integers of size N
+        array = []
+        n_adjusted = int(ea) * n_multiplier
+        for i in range(n_adjusted):
+            array.append(randint(-100, 101))
+
+        # Start timer
+        startTime = datetime.now()
+
+        # Run Algorithm
+        subarray, maxsum = alg(array)
+
+        # stop timer
+        totalTime = datetime.now() - startTime
+
+        with open(output_file, 'a') as fw:
+            fw.write("N = " + str(n_adjusted) + " | Time = " + str(totalTime.total_seconds()) + "\n")
+        print("N =", n_adjusted, "| Time =", totalTime.total_seconds())
+
+
+######## Run Algorithms on Input File ########
 
 # Delete contents of test results file
 with open(results_file, 'w') as fw:
@@ -66,27 +101,14 @@ with open(data_file, 'r') as fr:
             subarray, maxsum = MAXSUBARRAY_Enum(data)
 
             fw.write("Algorithm 1: Enumeration Results\n")
-
-            for ea in data:
-                fw.write(str(ea) + " ")
-            fw.write("\n")
-            for ea in subarray:
-                fw.write(str(ea) + " ")
-            fw.write("\n")
-            fw.write(str(maxsum) + "\n\n")
-
-            fw.write("Algorithm 2: Better Enumeration Results\n")
+            WRITERESULTS(data, subarray, maxsum, fw)
 
             # Call Algorithm 2: Enumeration to get the max sub array and max sum
             subarray, maxsum = MAXSUBARRAY_BetterEnum(data)
 
-            for ea in data:
-                fw.write(str(ea) + " ")
-            fw.write("\n")
-            for ea in subarray:
-                fw.write(str(ea) + " ")
-            fw.write("\n")
-            fw.write(str(maxsum) + "\n\n")
+            fw.write("Algorithm 2: Better Enumeration Results\n")
+            WRITERESULTS(data, subarray, maxsum, fw)
+
 
 ######## Experimental Time Runs ########
 
@@ -103,50 +125,11 @@ with open(exp_results_file, 'a') as fw:
     fw.write("\nAlgorithm 1: Enumeration\n")
 print("\nAlgorithm 1: Enumeration")
 
-for ea in N:
-    # Create array of random integers of size N
-    array = []
-    n_multiplier = 1
-    N_adjusted = int(ea) * n_multiplier
-    for i in range(N_adjusted):
-        array.append(randint(-100, 101))
-
-    # Start timer
-    startTime = datetime.now()
-
-    # Call Algorithm 1: Enumeration to get the max sub array and max sum
-    subarray, maxsum = MAXSUBARRAY_Enum(array)
-
-    # stop timer
-    totalTime = datetime.now() - startTime
-
-    with open(exp_results_file, 'a') as fw:
-        fw.write("N = " + str(ea) + " | Time = " + str(totalTime.total_seconds()) + "\n")
-    print("N =", ea, "| Time =", totalTime.total_seconds())
-
+RUNEXPERIMENT(MAXSUBARRAY_Enum, N, 1, exp_results_file)
 
 # Algorithm 2: Better Enumeration
 with open(exp_results_file, 'a') as fw:
     fw.write("\nAlgorithm 2: Better Enumeration\n")
 print("\nAlgorithm 2: Better Enumeration")
 
-for ea in N:
-    # Create array of random integers of size N
-    array = []
-    n_multiplier = 10
-    N_adjusted = int(ea) * n_multiplier
-    for i in range(N_adjusted):
-        array.append(randint(-100, 101))
-
-    # Start timer
-    startTime = datetime.now()
-
-    # Call Algorithm 2: Better Enumeration to get the max sub array and max sum
-    subarray, maxsum = MAXSUBARRAY_BetterEnum(array)
-
-    # stop timer
-    totalTime = datetime.now() - startTime
-
-    with open(exp_results_file, 'a') as fw:
-        fw.write("N = " + str(N_adjusted) + " | Time = " + str(totalTime.total_seconds()) + "\n")
-    print("N =", N_adjusted, "| Time =", totalTime.total_seconds())
+RUNEXPERIMENT(MAXSUBARRAY_BetterEnum, N, 10, exp_results_file)
