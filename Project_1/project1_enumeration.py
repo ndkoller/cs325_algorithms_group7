@@ -141,7 +141,7 @@ for ea in N:
     # Start timer
     startTime = datetime.now()
 
-    # Call Algorithm 1: Enumeration to get the max sub array and max sum
+    # Call Algorithm 2: Better Enumeration to get the max sub array and max sum
     subarray, maxsum = MAXSUBARRAY_BetterEnum(array)
 
     # stop timer
