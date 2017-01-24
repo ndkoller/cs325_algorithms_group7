@@ -16,8 +16,8 @@ def MAXSUBARRAY_Enum(array):
     max_i = 0
     max_j = 0
     for i in range(n):
-        sa_sum = 0
         for j in range(i, n):
+            sa_sum = 0
             for ea in array[i:j+1]:
                 sa_sum += int(ea)
             if sa_sum > max_sum:
@@ -47,7 +47,7 @@ def MAXSUBARRAY_BetterEnum(array):
 
 # Delete contents of test results file
 with open(results_file, 'w') as fw:
-    fw.write("Algorithm 1: Enumeration Experimental Run Times\n")
+    fw.write("")
 
 
 # Open data_file
@@ -59,11 +59,14 @@ with open(data_file, 'r') as fr:
         # Split line into an array of values
         data = line.split()
 
-        # Call Algorithm 1: Enumeration to get the max sub array and max sum
-        subarray, maxsum = MAXSUBARRAY_Enum(data)
-
-        # Append results to 'results_file'
+        # Append Enumeration results to 'results_file'
         with open(results_file, 'a') as fw:
+
+            # Call Algorithm 1: Enumeration to get the max sub array and max sum
+            subarray, maxsum = MAXSUBARRAY_Enum(data)
+
+            fw.write("Algorithm 1: Enumeration Results\n")
+
             for ea in data:
                 fw.write(str(ea) + " ")
             fw.write("\n")
@@ -72,6 +75,18 @@ with open(data_file, 'r') as fr:
             fw.write("\n")
             fw.write(str(maxsum) + "\n\n")
 
+            fw.write("Algorithm 2: Better Enumeration Results\n")
+
+            # Call Algorithm 2: Enumeration to get the max sub array and max sum
+            subarray, maxsum = MAXSUBARRAY_BetterEnum(data)
+
+            for ea in data:
+                fw.write(str(ea) + " ")
+            fw.write("\n")
+            for ea in subarray:
+                fw.write(str(ea) + " ")
+            fw.write("\n")
+            fw.write(str(maxsum) + "\n\n")
 
 ######## Experimental Time Runs ########
 
