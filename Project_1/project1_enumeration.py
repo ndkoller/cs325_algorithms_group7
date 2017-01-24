@@ -57,6 +57,9 @@ def WRITERESULTS(data, subarray, maxsum, fileobject):
 
 # Common code to time the algorithms
 def RUNEXPERIMENT(alg, n_array, n_multiplier, output_file):
+    with open(output_file, 'a') as fw:
+        fw.write("N Values\tTime (Seconds)\n")
+
     for ea in n_array:
         # Create array of random integers of size N
         array = []
@@ -74,7 +77,7 @@ def RUNEXPERIMENT(alg, n_array, n_multiplier, output_file):
         totalTime = datetime.now() - startTime
 
         with open(output_file, 'a') as fw:
-            fw.write("N = " + str(n_adjusted) + " | Time = " + str(totalTime.total_seconds()) + "\n")
+            fw.write(str(n_adjusted) + "\t" + str(totalTime.total_seconds()) + "\n")
         print("N =", n_adjusted, "| Time =", totalTime.total_seconds())
 
 
