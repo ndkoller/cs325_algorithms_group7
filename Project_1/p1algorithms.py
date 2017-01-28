@@ -1,11 +1,11 @@
 # Algorithm 1: Enumeration
-def MAXSUBARRAY_Enum(array):
-    n = len(array)
+def MAXSUBARRAY_Enum(array, low, high):
+    #n = len(array)
     max_sum = -1
     max_i = 0
     max_j = 0
-    for i in range(n):
-        for j in range(i, n):
+    for i in range(low, high+1, 1):
+        for j in range(i, high+1):
             sa_sum = 0
             for ea in array[i:j+1]:
                 sa_sum += int(ea)
@@ -13,35 +13,75 @@ def MAXSUBARRAY_Enum(array):
                 max_sum = sa_sum
                 max_i = i
                 max_j = j
-    return array[max_i:max_j+1], max_sum
+    return max_i, max_j, max_sum
 
 
 # Algorithm 2: Better Enumeration
-def MAXSUBARRAY_BetterEnum(array):
-    n = len(array)
+def MAXSUBARRAY_BetterEnum(array, low, high):
+    #n = len(array)
     max_sum = -1
     max_i = 0
     max_j = 0
-    for i in range(n):
+    for i in range(low, high+1, 1):
         sa_sum = 0
-        for j in range(i, n):
+        for j in range(i, high+1):
             sa_sum += int(array[j])
             if sa_sum > max_sum:
                 max_sum = sa_sum
                 max_i = i
                 max_j = j
-    return array[max_i:max_j+1], max_sum
+    return max_i, max_j, max_sum
 
 
 # Algorithm 3: Divide and Conquer
-def MAXSUBARRAY_DnC(array):
-    max_sum = 0
-    # Code
-    return array[:], max_sum
+# Max crossing sub-array:
+def MAX_CROSSING_SUBARRAY(array, low, mid, high):
+    left_sum = -99999999
+    sa_sum = 0
+    max_i = mid
+    for i in range(mid, low-1, -1):
+        sa_sum += int(array[i])
+        if sa_sum > left_sum:
+            left_sum = sa_sum
+            max_i = i
+
+    right_sum = -99999999
+    sa_sum = 0
+    max_j = mid
+    if mid+1 >= high:
+        right_sum = 0
+    else:
+        for j in range(mid+1, high+1, 1):
+            sa_sum += int(array[j])
+            if sa_sum > right_sum:
+                right_sum = sa_sum
+                max_j = j
+
+    return max_i, max_j, left_sum + right_sum
+
+def MAXSUBARRAY_DnC(array, low, high):
+    #print("low, high:", low, high)
+    if high == low:
+        #print("Return array[low]:", array[low])
+        return low, high, int(array[low])
+    else:
+        mid = int((low + high)/2)
+        left_low, left_high, left_sum = MAXSUBARRAY_DnC(array, int(low), mid)
+        right_low, right_high, right_sum = MAXSUBARRAY_DnC(array, mid+1, int(high))
+        cross_low, cross_high, cross_sum = MAX_CROSSING_SUBARRAY(array, low, mid, high)
+
+        if left_sum >= right_sum and left_sum >= cross_sum:
+            return left_low, left_high, left_sum
+        elif right_sum >= left_sum and right_sum >= cross_sum:
+            return right_low, right_high, right_sum
+        else:
+            return cross_low, cross_high, cross_sum
 
 
 # Algorithm 4: Linear Time
 def MAXSUBARRAY_Linear(array):
     max_sum = 0
+    max_i = 0
+    max_j = 0
     # Code
-    return array[:], max_sum
+    return max_i, max_j, max_sum

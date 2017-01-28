@@ -1,7 +1,7 @@
 # Import functions
 from datetime import datetime
 from random import *
-import p1algorithms as alg
+import p1algorithms as algs
 
 
 # File names
@@ -37,7 +37,7 @@ def RUNEXPERIMENT(alg, n_array, n_multiplier, output_file):
         startTime = datetime.now()
 
         # Run Algorithm
-        subarray, maxsum = alg(array)
+        max_i, max_j, maxsum = alg(array, 0, len(array)-1)
 
         # stop timer
         totalTime = datetime.now() - startTime
@@ -67,28 +67,28 @@ with open(data_file, 'r') as fr:
         with open(results_file, 'a') as fw:
 
             # Call Algorithm 1: Enumeration to get the max sub array and max sum
-            subarray, maxsum = alg.MAXSUBARRAY_Enum(data)
+            max_i, max_j, maxsum = algs.MAXSUBARRAY_Enum(data, 0, len(data)-1)
 
             fw.write("Algorithm 1: Enumeration Results\n")
-            WRITERESULTS(data, subarray, maxsum, fw)
+            WRITERESULTS(data, data[max_i:max_j+1], maxsum, fw)
 
             # Call Algorithm 2: Enumeration to get the max sub array and max sum
-            subarray, maxsum = alg.MAXSUBARRAY_BetterEnum(data)
+            max_i, max_j, maxsum = algs.MAXSUBARRAY_BetterEnum(data, 0, len(data)-1)
 
             fw.write("Algorithm 2: Better Enumeration Results\n")
-            WRITERESULTS(data, subarray, maxsum, fw)
+            WRITERESULTS(data, data[max_i:max_j+1], maxsum, fw)
 
             # Call Algorithm 3: Divide and Conquer to get the max sub array and max sum
-            subarray, maxsum = alg.MAXSUBARRAY_DnC(data)
+            max_i, max_j, maxsum = algs.MAXSUBARRAY_DnC(data, 0, len(data)-1)
 
             fw.write("Algorithm 3: Divide and Conquer Results\n")
-            WRITERESULTS(data, subarray, maxsum, fw)
+            WRITERESULTS(data, data[max_i:max_j+1], maxsum, fw)
 
             # Call Algorithm 4: Linear Time to get the max sub array and max sum
-            subarray, maxsum = alg.MAXSUBARRAY_Linear(data)
+            #subarray, maxsum = algs.MAXSUBARRAY_Linear(data)
 
-            fw.write("Algorithm 4: Linear Results\n")
-            WRITERESULTS(data, subarray, maxsum, fw)
+            #fw.write("Algorithm 4: Linear Results\n")
+            #WRITERESULTS(data, data[max_i:max_j+1], maxsum, fw)
 
 ######## Experimental Time Runs ########
 
@@ -102,32 +102,30 @@ N = [25, 35, 50, 75, 100, 125, 250, 500, 750, 1000]
 
 
 # Uncomment section of code the applicable algorithm
-'''
+
 # Algorithm 1: Enumeration
 with open(exp_results_file, 'a') as fw:
     fw.write("\nAlgorithm 1: Enumeration\n")
 print("\nAlgorithm 1: Enumeration")
 
-RUNEXPERIMENT(alg.MAXSUBARRAY_Enum, N, 1, exp_results_file)
-'''
+RUNEXPERIMENT(algs.MAXSUBARRAY_Enum, N, 1, exp_results_file)
 
-'''
+
 # Algorithm 2: Better Enumeration
 with open(exp_results_file, 'a') as fw:
     fw.write("\nAlgorithm 2: Better Enumeration\n")
 print("\nAlgorithm 2: Better Enumeration")
 
-RUNEXPERIMENT(alg.MAXSUBARRAY_BetterEnum, N, 10, exp_results_file)
-'''
+RUNEXPERIMENT(algs.MAXSUBARRAY_BetterEnum, N, 10, exp_results_file)
 
-'''
+
 # Algorithm 3: Divide and Conquer
 with open(exp_results_file, 'a') as fw:
     fw.write("\nAlgorithm 3: Divide and Conquer\n")
 print("\nAlgorithm 3: Divide and Conquer")
 
-RUNEXPERIMENT(alg.MAXSUBARRAY_DnC, N, 100, exp_results_file)
-'''
+RUNEXPERIMENT(algs.MAXSUBARRAY_DnC, N, 1000, exp_results_file)
+
 
 '''
 # Algorithm 4: Linear Time
@@ -135,5 +133,5 @@ with open(exp_results_file, 'a') as fw:
     fw.write("\nAlgorithm 4: Linear Time\n")
 print("\nAlgorithm 4: Linear Time")
 
-RUNEXPERIMENT(alg.MAXSUBARRAY_Linear, N, 500, exp_results_file)
+RUNEXPERIMENT(algs.MAXSUBARRAY_Linear, N, 500, exp_results_file)
 '''
