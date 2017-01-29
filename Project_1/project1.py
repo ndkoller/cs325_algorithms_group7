@@ -85,10 +85,10 @@ with open(data_file, 'r') as fr:
             WRITERESULTS(data, data[max_i:max_j+1], maxsum, fw)
 
             # Call Algorithm 4: Linear Time to get the max sub array and max sum
-            #subarray, maxsum = algs.MAXSUBARRAY_Linear(data)
+            max_i, max_j, maxsum = algs.MAXSUBARRAY_Linear(data, 0, len(data)-1)
 
-            #fw.write("Algorithm 4: Linear Results\n")
-            #WRITERESULTS(data, data[max_i:max_j+1], maxsum, fw)
+            fw.write("Algorithm 4: Linear Results\n")
+            WRITERESULTS(data, data[max_i:max_j+1], maxsum, fw)
 
 ######## Experimental Time Runs ########
 
@@ -99,9 +99,6 @@ print("Experimental Time Runs")
 
 # Array for N sizes
 N = [25, 35, 50, 75, 100, 125, 250, 500, 750, 1000]
-
-
-# Uncomment section of code the applicable algorithm
 
 # Algorithm 1: Enumeration
 with open(exp_results_file, 'a') as fw:
@@ -127,11 +124,9 @@ print("\nAlgorithm 3: Divide and Conquer")
 RUNEXPERIMENT(algs.MAXSUBARRAY_DnC, N, 1000, exp_results_file)
 
 
-'''
 # Algorithm 4: Linear Time
 with open(exp_results_file, 'a') as fw:
     fw.write("\nAlgorithm 4: Linear Time\n")
 print("\nAlgorithm 4: Linear Time")
 
-RUNEXPERIMENT(algs.MAXSUBARRAY_Linear, N, 500, exp_results_file)
-'''
+RUNEXPERIMENT(algs.MAXSUBARRAY_Linear, N, 10000, exp_results_file)

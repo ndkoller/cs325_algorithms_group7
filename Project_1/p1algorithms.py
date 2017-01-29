@@ -1,6 +1,5 @@
 # Algorithm 1: Enumeration
 def MAXSUBARRAY_Enum(array, low, high):
-    #n = len(array)
     max_sum = -1
     max_i = 0
     max_j = 0
@@ -18,7 +17,6 @@ def MAXSUBARRAY_Enum(array, low, high):
 
 # Algorithm 2: Better Enumeration
 def MAXSUBARRAY_BetterEnum(array, low, high):
-    #n = len(array)
     max_sum = -1
     max_i = 0
     max_j = 0
@@ -60,9 +58,7 @@ def MAX_CROSSING_SUBARRAY(array, low, mid, high):
     return max_i, max_j, left_sum + right_sum
 
 def MAXSUBARRAY_DnC(array, low, high):
-    #print("low, high:", low, high)
     if high == low:
-        #print("Return array[low]:", array[low])
         return low, high, int(array[low])
     else:
         mid = int((low + high)/2)
@@ -79,9 +75,20 @@ def MAXSUBARRAY_DnC(array, low, high):
 
 
 # Algorithm 4: Linear Time
-def MAXSUBARRAY_Linear(array):
-    max_sum = 0
+def MAXSUBARRAY_Linear(array, low, high):
+    max_sum = -99999999
     max_i = 0
     max_j = 0
-    # Code
+    temp = 0
+    curr_max = 0
+
+    for i in range(low, high+1, 1):
+        curr_max += int(array[i])
+        if max_sum < curr_max:
+            max_sum = curr_max
+            max_i = temp
+            max_j = i
+        if curr_max < 0:
+            curr_max = 0
+            temp = i+1
     return max_i, max_j, max_sum
