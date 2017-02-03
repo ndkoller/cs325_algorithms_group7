@@ -22,14 +22,15 @@ def GROUPER(iterable, n, fillvalue=None):
 
 
 # Common code to write results to output file
-def WRITERESULTS(data, coincounts, totalcoins, fileobject):
+def WRITERESULTS(data, coincounts, totalcoins, coinnumber, fileobject):
     for ea in data:
         fileobject.write(str(ea) + "\t")
     fileobject.write("\n")
     for ea in coincounts:
         fileobject.write(str(ea) + "\t")
     fileobject.write("\n")
-    fileobject.write(str(totalcoins) + "\n\n")
+    fileobject.write(str(totalcoins) + "\n")
+    fileobject.write(str(coinnumber) + "\n\n")
 
 
 # Common code to time the algorithms
@@ -37,11 +38,10 @@ def RUNEXPERIMENT(alg, n_array, data, n_multiplier, output_file):
     with open(output_file, 'a') as fw:
         fw.write("N Values\tTime (Seconds)\n")
 
-    
     # Update below needs updating for Project 2 (left over from Project 1)
     for ea in n_array:
         
-        target = ea
+        target = ea * n_multiplier
         
         # Start timer
         startTime = datetime.now()
@@ -53,8 +53,8 @@ def RUNEXPERIMENT(alg, n_array, data, n_multiplier, output_file):
         totalTime = datetime.now() - startTime
 
         with open(output_file, 'a') as fw:
-            fw.write(str(target) + "\t" + str(totalTime.total_seconds()) + "\n")
-        print("N =", target, "| Time =", totalTime.total_seconds(), "s")
+            fw.write(str(target) + "\t" + str(totalTime.total_seconds()) + "s | Coin = " + str(m) + "\n")
+        print("N =", target, "| Time =", totalTime.total_seconds(), "s | Coin = ", m)
     
 
 ######## Run Algorithms on Input File ########
@@ -79,17 +79,17 @@ with open(data_file, 'r') as fr:
 
             # Call Algorithm 1: ChangeSlow to get the max sub array and max sum
             c, m = algs.ChangeSlow(data, dataTarget)
-            print("Algorithm 1: Change Slow\nc:", c, 'm:', m)
+            print("Algorithm 1: Change Slow\nc:", c, 'c length:', len(c), 'm:', m)
 
             fw.write("Algorithm 1: Change Slow\n")
-            WRITERESULTS(data, c, m, fw)
+            WRITERESULTS(data, c, m, len(c), fw)
 
             # Call Algorithm 2: ChangeGreedy
             c, m = algs.ChangeGreedy(data, dataTarget)
-            print("Algorithm 2: Change Greedy\nc:", c, 'm:', m)
+            print("Algorithm 2: Change Greedy\nc:", c, 'c length:', len(c), 'm:', m)
 
             fw.write("Algorithm 2: Change Greedy\n")
-            WRITERESULTS(data, c, m, fw)
+            WRITERESULTS(data, c, m, len(c), fw)
 
 
 ######## Experimental Time Runs ########
@@ -101,8 +101,8 @@ print("Experimental Time Runs")
 
 # Array for N sizes
 N = []
-i = 510
-for i in range(510, 705, 5):
+i = 100
+for i in range(100, 305, 5):
     N.append(i)
 VN = [1, 5, 10, 25, 50]
 # print("N:", N)    # for reference only, checking what N is
@@ -151,7 +151,7 @@ with open(exp_results_file, 'a') as fw:
     fw.write("\nAlgorithm 2: Change Greedy\n")
 print("\nAlgorithm 2: Change Greedy")
 
-RUNEXPERIMENT(algs.ChangeGreedy, N, VN, 1, exp_results_file)
+RUNEXPERIMENT(algs.ChangeGreedy, N, VN, 100000, exp_results_file)
 
 # Algorithm 3: Change DP
 # with open(exp_results_file, 'a') as fw:
