@@ -3,11 +3,15 @@ from datetime import datetime
 from random import *
 import p2algorithms as algs
 from itertools import zip_longest
+import sys
 
 # File names
-data_file = 'coins.txt'
-results_file = 'MSS_Results.txt'
-exp_results_file = 'MS_ExperimentalResults.txt'
+if len(sys.argv) == 1:
+    data_file = 'coins.txt'         # for testing purposes
+else:
+    data_file = str(sys.argv[1])
+results_file = data_file[:-4] + 'change.txt'
+exp_results_file = data_file[:-4] + '_ExperimentalResults.txt'
 
 # Python Documentation Recipe to group file input
 def GROUPER(iterable, n, fillvalue=None):
@@ -18,18 +22,18 @@ def GROUPER(iterable, n, fillvalue=None):
 
 
 # Common code to write results to output file
-def WRITERESULTS(data, subarray, maxsum, fileobject):
+def WRITERESULTS(data, coincounts, totalcoins, fileobject):
     for ea in data:
-        fileobject.write(str(ea) + " ")
+        fileobject.write(str(ea) + "\t")
     fileobject.write("\n")
-    for ea in subarray:
-        fileobject.write(str(ea) + " ")
+    for ea in coincounts:
+        fileobject.write(str(ea) + "\t")
     fileobject.write("\n")
-    fileobject.write(str(maxsum) + "\n\n")
+    fileobject.write(str(totalcoins) + "\n\n")
 
 
 # Common code to time the algorithms
-def RUNEXPERIMENT(alg, n_array, n_multiplier, output_file):
+def RUNEXPERIMENT(alg, n_array, data, target, n_multiplier, output_file):
     with open(output_file, 'a') as fw:
         fw.write("N Values\tTime (Seconds)\n")
 
@@ -44,7 +48,7 @@ def RUNEXPERIMENT(alg, n_array, n_multiplier, output_file):
         startTime = datetime.now()
 
         # Run Algorithm
-        max_i, max_j, maxsum = alg(array, 0, len(array)-1)
+        c, m = alg(data, target)
 
         # stop timer
         totalTime = datetime.now() - startTime
@@ -69,12 +73,12 @@ with open(data_file, 'r') as fr:
 
         # Split line into an array of values 
         # This is the denomination array in test files
-        data = line1.split()
-        dataTarget = line2
+        data = list(map(int, line1.split()))
+        dataTarget = int(line2)
         # print('A:', data, 'B:', dataTarget)
         
         # Append Enumeration results to 'results_file'
-        # with open(results_file, 'a') as fw:
+        with open(results_file, 'a') as fw:
 
             # # Call Algorithm 1: Enumeration to get the max sub array and max sum
             # max_i, max_j, maxsum = algs.MAXSUBARRAY_Enum(data, 0, len(data)-1)
@@ -82,11 +86,12 @@ with open(data_file, 'r') as fr:
             # fw.write("Algorithm 1: Enumeration Results\n")
             # WRITERESULTS(data, data[max_i:max_j+1], maxsum, fw)
 
-            # # Call Algorithm 2: Enumeration to get the max sub array and max sum
-            # max_i, max_j, maxsum = algs.MAXSUBARRAY_BetterEnum(data, 0, len(data)-1)
+            # Call Algorithm 2: ChangeGreedy
+            c, m = algs.ChangeGreedy(data, dataTarget)
+            print("Algorithm 2: Change Greedy\nc:", c, 'm:', m)
 
-            # fw.write("Algorithm 2: Better Enumeration Results\n")
-            # WRITERESULTS(data, data[max_i:max_j+1], maxsum, fw)
+            fw.write("Algorithm 2: Change Greedy\n")
+            WRITERESULTS(data, c, m, fw)
 
             # # Call Algorithm 3: Divide and Conquer to get the max sub array and max sum
             # max_i, max_j, maxsum = algs.MAXSUBARRAY_DnC(data, 0, len(data)-1)
@@ -108,22 +113,27 @@ with open(exp_results_file, 'w') as fw:
 print("Experimental Time Runs")
 
 # Array for N sizes
-N = [25, 35, 50, 75, 100, 125, 250, 500, 750, 1000]
+N = []
+i = 2010
+for i in range(2010, 2205, 5):
+    N.append(i)
+
+print("N:", N)
 
 # Algorithm 1: Enumeration
 # with open(exp_results_file, 'a') as fw:
-    # fw.write("\nAlgorithm 1: Enumeration\n")
+# fw.write("\nAlgorithm 1: Enumeration\n")
 # print("\nAlgorithm 1: Enumeration")
 
 # RUNEXPERIMENT(algs.MAXSUBARRAY_Enum, N, 1, exp_results_file)
 
 
-# # Algorithm 2: Better Enumeration
+# Algorithm 2: Better Enumeration
 # with open(exp_results_file, 'a') as fw:
-    # fw.write("\nAlgorithm 2: Better Enumeration\n")
-# print("\nAlgorithm 2: Better Enumeration")
-
-# RUNEXPERIMENT(algs.MAXSUBARRAY_BetterEnum, N, 10, exp_results_file)
+#     fw.write("\nAlgorithm 2: Better Enumeration\n")
+# print("\nAlgorithm 2: Greedy Change")
+#
+# RUNEXPERIMENT(algs.ChangeGreedy, N, 10, exp_results_file)
 
 
 # # Algorithm 3: Divide and Conquer
