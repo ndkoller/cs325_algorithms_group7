@@ -37,6 +37,8 @@ def RUNEXPERIMENT(alg, n_array, data, target, n_multiplier, output_file):
     with open(output_file, 'a') as fw:
         fw.write("N Values\tTime (Seconds)\n")
 
+    '''
+    Update below needs updating for Project 2 (left over from Project 1)
     for ea in n_array:
         # Create array of random integers of size N
         array = []
@@ -56,14 +58,13 @@ def RUNEXPERIMENT(alg, n_array, data, target, n_multiplier, output_file):
         with open(output_file, 'a') as fw:
             fw.write(str(n_adjusted) + "\t" + str(totalTime.total_seconds()) + "\n")
         print("N =", n_adjusted, "| Time =", totalTime.total_seconds(), "s")
-
+    '''
 
 ######## Run Algorithms on Input File ########
 
 # Delete contents of test results file
 with open(results_file, 'w') as fw:
     fw.write("")
-
 
 # Open data_file
 with open(data_file, 'r') as fr:
@@ -75,16 +76,16 @@ with open(data_file, 'r') as fr:
         # This is the denomination array in test files
         data = list(map(int, line1.split()))
         dataTarget = int(line2)
-        # print('A:', data, 'B:', dataTarget)
         
         # Append Enumeration results to 'results_file'
         with open(results_file, 'a') as fw:
 
-            # # Call Algorithm 1: Enumeration to get the max sub array and max sum
-            # max_i, max_j, maxsum = algs.MAXSUBARRAY_Enum(data, 0, len(data)-1)
+            # Call Algorithm 1: ChangeSlow to get the max sub array and max sum
+            c, m = algs.ChangeSlow(data, dataTarget)
+            print("Algorithm 1: Change Slow\nc:", c, 'm:', m)
 
-            # fw.write("Algorithm 1: Enumeration Results\n")
-            # WRITERESULTS(data, data[max_i:max_j+1], maxsum, fw)
+            fw.write("Algorithm 1: Change Slow\n")
+            WRITERESULTS(data, c, m, fw)
 
             # Call Algorithm 2: ChangeGreedy
             c, m = algs.ChangeGreedy(data, dataTarget)
@@ -93,17 +94,6 @@ with open(data_file, 'r') as fr:
             fw.write("Algorithm 2: Change Greedy\n")
             WRITERESULTS(data, c, m, fw)
 
-            # # Call Algorithm 3: Divide and Conquer to get the max sub array and max sum
-            # max_i, max_j, maxsum = algs.MAXSUBARRAY_DnC(data, 0, len(data)-1)
-
-            # fw.write("Algorithm 3: Divide and Conquer Results\n")
-            # WRITERESULTS(data, data[max_i:max_j+1], maxsum, fw)
-
-            # # Call Algorithm 4: Linear Time to get the max sub array and max sum
-            # max_i, max_j, maxsum = algs.MAXSUBARRAY_Linear(data, 0, len(data)-1)
-
-            # fw.write("Algorithm 4: Linear Results\n")
-            # WRITERESULTS(data, data[max_i:max_j+1], maxsum, fw)
 
 ######## Experimental Time Runs ########
 
@@ -117,36 +107,12 @@ N = []
 i = 2010
 for i in range(2010, 2205, 5):
     N.append(i)
+# print("N:", N)    # for reference only, checking what N is
 
-print("N:", N)
-
+''' Code below needs updating for Project 2 (left over from Project 1)'''
 # Algorithm 1: Enumeration
 # with open(exp_results_file, 'a') as fw:
 # fw.write("\nAlgorithm 1: Enumeration\n")
 # print("\nAlgorithm 1: Enumeration")
 
 # RUNEXPERIMENT(algs.MAXSUBARRAY_Enum, N, 1, exp_results_file)
-
-
-# Algorithm 2: Better Enumeration
-# with open(exp_results_file, 'a') as fw:
-#     fw.write("\nAlgorithm 2: Better Enumeration\n")
-# print("\nAlgorithm 2: Greedy Change")
-#
-# RUNEXPERIMENT(algs.ChangeGreedy, N, 10, exp_results_file)
-
-
-# # Algorithm 3: Divide and Conquer
-# with open(exp_results_file, 'a') as fw:
-    # fw.write("\nAlgorithm 3: Divide and Conquer\n")
-# print("\nAlgorithm 3: Divide and Conquer")
-
-# RUNEXPERIMENT(algs.MAXSUBARRAY_DnC, N, 1000, exp_results_file)
-
-
-# # Algorithm 4: Linear Time
-# with open(exp_results_file, 'a') as fw:
-    # fw.write("\nAlgorithm 4: Linear Time\n")
-# print("\nAlgorithm 4: Linear Time")
-
-# RUNEXPERIMENT(algs.MAXSUBARRAY_Linear, N, 10000, exp_results_file)
