@@ -1,0 +1,15 @@
+Algorithm 2: Change Greedy
+1	5	10	25	50	
+4	0	2	0	0	
+6
+
+Algorithm 2: Change Greedy
+1	10	21	50	
+3	1	0	1	
+5
+
+Algorithm 2: Change Greedy
+1	2	4	8	16	
+0	0	0	1	7	
+8
+
