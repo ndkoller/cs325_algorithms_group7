@@ -7,7 +7,7 @@ import sys
 
 # File names
 if len(sys.argv) == 1:
-    data_file = 'coins.txt'         # for testing purposes
+    data_file = 'correctnessTest.txt'         # for testing purposes
 else:
     data_file = str(sys.argv[1])
 results_file = data_file[:-4] + 'change.txt'
@@ -33,19 +33,16 @@ def WRITERESULTS(data, coincounts, totalcoins, fileobject):
 
 
 # Common code to time the algorithms
-def RUNEXPERIMENT(alg, n_array, data, target, n_multiplier, output_file):
+def RUNEXPERIMENT(alg, n_array, data, n_multiplier, output_file):
     with open(output_file, 'a') as fw:
         fw.write("N Values\tTime (Seconds)\n")
 
-    '''
-    Update below needs updating for Project 2 (left over from Project 1)
+    
+    # Update below needs updating for Project 2 (left over from Project 1)
     for ea in n_array:
-        # Create array of random integers of size N
-        array = []
-        n_adjusted = int(ea) * n_multiplier
-        for i in range(n_adjusted):
-            array.append(randint(-100, 101))
-
+        
+        target = ea
+        
         # Start timer
         startTime = datetime.now()
 
@@ -58,7 +55,7 @@ def RUNEXPERIMENT(alg, n_array, data, target, n_multiplier, output_file):
         with open(output_file, 'a') as fw:
             fw.write(str(n_adjusted) + "\t" + str(totalTime.total_seconds()) + "\n")
         print("N =", n_adjusted, "| Time =", totalTime.total_seconds(), "s")
-    '''
+    
 
 ######## Run Algorithms on Input File ########
 
@@ -107,12 +104,105 @@ N = []
 i = 2010
 for i in range(2010, 2205, 5):
     N.append(i)
+VN = [1, 5, 10, 25, 50]
 # print("N:", N)    # for reference only, checking what N is
 
-''' Code below needs updating for Project 2 (left over from Project 1)'''
-# Algorithm 1: Enumeration
-# with open(exp_results_file, 'a') as fw:
-# fw.write("\nAlgorithm 1: Enumeration\n")
-# print("\nAlgorithm 1: Enumeration")
+# Alternative Arrays for Question 4
+M = []
+j = 2000
+for j in range(2000, 2201, 1):
+    M.append(j)
+VM1 = [1, 2, 6, 12, 24, 48, 60]
+VM2 = [1, 6, 13, 37, 150]
+j = 10000
+ML = []
+for j in range(10000, 10101, 1):
+    ML.append(j)
+# print("M:", M)    # for reference only, checking what N is
+    
+# Data Array for Question 5 (Re-Use M's from 4)
+F = [1]
+k = 2
+for k in range(2, 32, 2):
+    F.append(k)
+    
+print("F:", F)    # for reference only, checking what N is
 
-# RUNEXPERIMENT(algs.MAXSUBARRAY_Enum, N, 1, exp_results_file)
+# Question 7 Random Array Sizes Positive Sorted random values
+        
+# Create array of random integers of size N
+# array = []
+# n_adjusted = int(ea) * n_multiplier
+# for i in range(n_adjusted):
+    # array.append(randint(-100, 101))
+   
+''' Code below needs updating for Project 2 (left over from Project 1)'''
+# Question 3 Experimental Run:
+
+# Algorithm 1: Change Slow
+with open(exp_results_file, 'a') as fw:
+    fw.write("\nAlgorithm 1: Change Slow\n")
+print("\nAlgorithm 1: Change Slow")
+
+RUNEXPERIMENT(algs.ChangeSlow, N, VN, 1, exp_results_file)
+
+# Algorithm 2: Change Greedy
+with open(exp_results_file, 'a') as fw:
+    fw.write("\nAlgorithm 2: Change Greedy\n")
+print("\nAlgorithm 2: Change Greedy")
+
+RUNEXPERIMENT(algs.ChangeGreedy, N, VN, 1, exp_results_file)
+
+# Algorithm 3: Change DP
+# with open(exp_results_file, 'a') as fw:
+# fw.write("\nAlgorithm 3: Change DP\n")
+# print("\nAlgorithm 3: Change DP")
+
+# RUNEXPERIMENT(algs.ChangeDP, N, VN, 1, exp_results_file)
+
+# Question 4 - VM1
+
+# # Algorithm 1: Change Slow
+# with open(exp_results_file, 'a') as fw:
+#    fw.write("\nAlgorithm 1: Change Slow\n")
+# print("\nAlgorithm 1: Change Slow")
+
+# RUNEXPERIMENT(algs.ChangeSlow, M, VM1, 1, exp_results_file)
+
+# # Algorithm 2: Change Greedy
+# with open(exp_results_file, 'a') as fw:
+#    fw.write("\nAlgorithm 2: Change Greedy\n")
+# print("\nAlgorithm 2: Change Greedy")
+
+# RUNEXPERIMENT(algs.ChangeGreedy, M, VM1, 1, exp_results_file)
+
+# # Algorithm 3: Change DP
+# # with open(exp_results_file, 'a') as fw:
+# #     fw.write("\nAlgorithm 3: Change DP\n")
+# # print("\nAlgorithm 3: Change DP")
+# # Using ML Targets
+# # RUNEXPERIMENT(algs.ChangeDP, ML, VM1, 1, exp_results_file)
+
+# # Question 4 - VM2
+
+# # Algorithm 1: Change Slow
+# with open(exp_results_file, 'a') as fw:
+#    fw.write("\nAlgorithm 1: Change Slow\n")
+# print("\nAlgorithm 1: Change Slow")
+
+# RUNEXPERIMENT(algs.ChangeSlow, M, VM2, 1, exp_results_file)
+
+# # Algorithm 2: Change Greedy
+# with open(exp_results_file, 'a') as fw:
+#    fw.write("\nAlgorithm 2: Change Greedy\n")
+# print("\nAlgorithm 2: Change Greedy")
+
+# RUNEXPERIMENT(algs.ChangeGreedy, M, VM2, 1, exp_results_file)
+
+# # Algorithm 3: Change DP
+# # with open(exp_results_file, 'a') as fw:
+#       fw.write("\nAlgorithm 3: Change DP\n")
+# # print("\nAlgorithm 3: Change DP")
+
+# # RUNEXPERIMENT(algs.ChangeDP, ML, VM2, 1, exp_results_file)
+
