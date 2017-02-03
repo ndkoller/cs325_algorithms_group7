@@ -53,8 +53,8 @@ def RUNEXPERIMENT(alg, n_array, data, n_multiplier, output_file):
         totalTime = datetime.now() - startTime
 
         with open(output_file, 'a') as fw:
-            fw.write(str(n_adjusted) + "\t" + str(totalTime.total_seconds()) + "\n")
-        print("N =", n_adjusted, "| Time =", totalTime.total_seconds(), "s")
+            fw.write(str(target) + "\t" + str(totalTime.total_seconds()) + "\n")
+        print("N =", target, "| Time =", totalTime.total_seconds(), "s")
     
 
 ######## Run Algorithms on Input File ########
@@ -101,8 +101,8 @@ print("Experimental Time Runs")
 
 # Array for N sizes
 N = []
-i = 2010
-for i in range(2010, 2205, 5):
+i = 510
+for i in range(510, 705, 5):
     N.append(i)
 VN = [1, 5, 10, 25, 50]
 # print("N:", N)    # for reference only, checking what N is
@@ -126,7 +126,7 @@ k = 2
 for k in range(2, 32, 2):
     F.append(k)
     
-print("F:", F)    # for reference only, checking what N is
+# ("F:", F)    # for reference only, checking what N is
 
 # Question 7 Random Array Sizes Positive Sorted random values
         
