@@ -1,3 +1,5 @@
+import math
+
 # Algorithm 1: Enumeration
 # Helper function
 def change(target, coins, coins_list):
@@ -31,11 +33,11 @@ def ChangeSlow(coins, target):
 
 
 # Algorithm 2: Change Greedy
-def ChangeGreedy(array, target):
-    c = [0] * len(array)
+def ChangeGreedy(coins, target):
+    c = [0] * len(coins)
     m = 0
-    i = len(array) - 1
-    for ea in reversed(array):
+    i = len(coins) - 1
+    for ea in reversed(coins):
         while target - ea >= 0:
             target -= ea
             m += 1
@@ -45,8 +47,32 @@ def ChangeGreedy(array, target):
 
 
 # Algorithm 3: Change Dynamic Programming
-def ChangeDP(array, target):
-    target = int(target)
-    c = [0] * len(array)
-    m = 0
+def ChangeDP(coins, target):
+    T = [math.inf]*(target+1)
+    R = [-1]*(target+1)
+    T[0] = 0
+    R[0] = -1
+
+    for j in range(len(coins)):
+        for i in range(1, target+1):
+            if i >= coins[j]:
+                if T[i - coins[j]] + 1 < T[i]:
+                    T[i] = 1 + T[i-coins[j]]
+                    R[i] = j
+
+    m = T[-1]
+
+    opt = []
+    start = len(R)-1
+    while start != 0:
+        j = R[start]
+        opt.append(coins[j])
+        start = start - coins[j]
+
+    c = [0] * len(coins)
+    i = 0
+    for ea in coins:
+        c[i] = opt.count(ea)
+        i += 1
+
     return c, m

@@ -4,6 +4,7 @@ from random import *
 import p2algorithms as algs
 from itertools import zip_longest
 import sys
+import math
 
 # File names
 if len(sys.argv) == 1:
@@ -11,7 +12,7 @@ if len(sys.argv) == 1:
 else:
     data_file = str(sys.argv[1])
 results_file = data_file[:-4] + 'change.txt'
-exp_results_file = data_file[:-4] + '_ExperimentalResults.txt'
+PR3_exp_results_file = 'PR3_ExperimentalResults.txt'
 
 # Python Documentation Recipe to group file input
 def GROUPER(iterable, n, fillvalue=None):
@@ -91,23 +92,29 @@ with open(data_file, 'r') as fr:
             fw.write("Algorithm 2: Change Greedy\n")
             WRITERESULTS(data, c, m, len(c), fw)
 
+            # Call Algorithm 3: ChangeDP
+            c, m = algs.ChangeDP(data, dataTarget)
+            print("Algorithm 3: Change DP\nc:", c, 'm:', m)
+
+            fw.write("Algorithm 3: Change DP\n")
+            WRITERESULTS(data, c, m, fw)
+
 
 ######## Experimental Time Runs ########
 
 # Delete contents of test results file
-with open(exp_results_file, 'w') as fw:
+with open(PR3_exp_results_file, 'w') as fw:
     fw.write("Experimental Time Runs\n")
 print("Experimental Time Runs")
 
-# Array for N sizes
+# Array for Project Report Question 3
 N = []
 i = 100
 for i in range(100, 305, 5):
     N.append(i)
 VN = [1, 5, 10, 25, 50]
-# print("N:", N)    # for reference only, checking what N is
 
-# Alternative Arrays for Question 4
+# Alternative Arrays for Project Report Question 4
 M = []
 j = 2000
 for j in range(2000, 2201, 1):
@@ -118,16 +125,13 @@ j = 10000
 ML = []
 for j in range(10000, 10101, 1):
     ML.append(j)
-# print("M:", M)    # for reference only, checking what N is
     
-# Data Array for Question 5 (Re-Use M's from 4)
+# Array for Project Report Question 5 (Re-Use M's from 4)
 F = [1]
 k = 2
 for k in range(2, 32, 2):
     F.append(k)
     
-# ("F:", F)    # for reference only, checking what N is
-
 # Question 7 Random Array Sizes Positive Sorted random values
         
 # Create array of random integers of size N
@@ -139,26 +143,28 @@ for k in range(2, 32, 2):
 ''' Code below needs updating for Project 2 (left over from Project 1)'''
 # Question 3 Experimental Run:
 
+print("\n******Project Report Question 3******")
+
 # Algorithm 1: Change Slow
-with open(exp_results_file, 'a') as fw:
+with open(PR3_exp_results_file, 'a') as fw:
     fw.write("\nAlgorithm 1: Change Slow\n")
 print("\nAlgorithm 1: Change Slow")
 
-RUNEXPERIMENT(algs.ChangeSlow, N, VN, 1, exp_results_file)
+RUNEXPERIMENT(algs.ChangeSlow, N, VN, 1, PR3_exp_results_file)
 
 # Algorithm 2: Change Greedy
-with open(exp_results_file, 'a') as fw:
+with open(PR3_exp_results_file, 'a') as fw:
     fw.write("\nAlgorithm 2: Change Greedy\n")
 print("\nAlgorithm 2: Change Greedy")
 
-RUNEXPERIMENT(algs.ChangeGreedy, N, VN, 100000, exp_results_file)
+RUNEXPERIMENT(algs.ChangeGreedy, N, VN, 100000, PR3_exp_results_file)
 
 # Algorithm 3: Change DP
-# with open(exp_results_file, 'a') as fw:
-# fw.write("\nAlgorithm 3: Change DP\n")
-# print("\nAlgorithm 3: Change DP")
+with open(PR3_exp_results_file, 'a') as fw:
+    fw.write("\nAlgorithm 3: Change Dynamic Programming\n")
+print("\nAlgorithm 2: Change Dynamic Programming")
 
-# RUNEXPERIMENT(algs.ChangeDP, N, VN, 1, exp_results_file)
+RUNEXPERIMENT(algs.ChangeDP, N, VN, 1000, PR3_exp_results_file)
 
 # Question 4 - VM1
 
@@ -171,6 +177,7 @@ RUNEXPERIMENT(algs.ChangeGreedy, N, VN, 100000, exp_results_file)
 
 # # Algorithm 2: Change Greedy
 # with open(exp_results_file, 'a') as fw:
+
 #    fw.write("\nAlgorithm 2: Change Greedy\n")
 # print("\nAlgorithm 2: Change Greedy")
 
