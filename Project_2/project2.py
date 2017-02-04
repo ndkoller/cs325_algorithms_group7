@@ -23,15 +23,14 @@ def GROUPER(iterable, n, fillvalue=None):
 
 
 # Common code to write results to output file
-def WRITERESULTS(data, coincounts, totalcoins, coinnumber, fileobject):
+def WRITERESULTS(data, coincounts, totalcoins, fileobject):
     for ea in data:
         fileobject.write(str(ea) + "\t")
     fileobject.write("\n")
     for ea in coincounts:
         fileobject.write(str(ea) + "\t")
     fileobject.write("\n")
-    fileobject.write(str(totalcoins) + "\n")
-    fileobject.write(str(coinnumber) + "\n\n")
+    fileobject.write(str(totalcoins) + "\n\n")
 
 
 # Common code to time the algorithms
@@ -80,17 +79,17 @@ with open(data_file, 'r') as fr:
 
             # Call Algorithm 1: ChangeSlow to get the max sub array and max sum
             c, m = algs.ChangeSlow(data, dataTarget)
-            print("Algorithm 1: Change Slow\nc:", c, 'c length:', len(c), 'm:', m)
+            print("Algorithm 1: Change Slow\nc:", c, 'm:', m)
 
             fw.write("Algorithm 1: Change Slow\n")
-            WRITERESULTS(data, c, m, len(c), fw)
+            WRITERESULTS(data, c, m, fw)
 
             # Call Algorithm 2: ChangeGreedy
             c, m = algs.ChangeGreedy(data, dataTarget)
-            print("Algorithm 2: Change Greedy\nc:", c, 'c length:', len(c), 'm:', m)
+            print("Algorithm 2: Change Greedy\nc:", c, 'm:', m)
 
             fw.write("Algorithm 2: Change Greedy\n")
-            WRITERESULTS(data, c, m, len(c), fw)
+            WRITERESULTS(data, c, m, fw)
 
             # Call Algorithm 3: ChangeDP
             c, m = algs.ChangeDP(data, dataTarget)
@@ -131,7 +130,7 @@ F = [1]
 k = 2
 for k in range(2, 32, 2):
     F.append(k)
-    
+
 # Question 7 Random Array Sizes Positive Sorted random values
         
 # Create array of random integers of size N
@@ -142,7 +141,6 @@ for k in range(2, 32, 2):
    
 ''' Code below needs updating for Project 2 (left over from Project 1)'''
 # Question 3 Experimental Run:
-
 print("\n******Project Report Question 3******")
 
 # Algorithm 1: Change Slow
@@ -177,7 +175,6 @@ RUNEXPERIMENT(algs.ChangeDP, N, VN, 1000, PR3_exp_results_file)
 
 # # Algorithm 2: Change Greedy
 # with open(exp_results_file, 'a') as fw:
-
 #    fw.write("\nAlgorithm 2: Change Greedy\n")
 # print("\nAlgorithm 2: Change Greedy")
 
