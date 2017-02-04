@@ -236,26 +236,26 @@ if run_pr5:
         V5.append(k)
 
     # Delete contents of test results file
-    with open(PR4_exp_results_file, 'w') as fw:
+    with open(PR5_exp_results_file, 'w') as fw:
         fw.write("Experimental Time Runs\n")
     print("\n******Project Report Question 5******\nRunning Experiment...")
 
     # Algorithm 1: Change Slow
-    with open(PR4_exp_results_file, 'a') as fw:
+    with open(PR5_exp_results_file, 'a') as fw:
         fw.write("\nAlgorithm 1: Change Slow\n")
     print("\nAlgorithm 1: Change Slow")
 
     RUNEXPERIMENT(algs.ChangeSlow, A_small[:50], V5, 1, True, PR5_exp_results_file)
 
     # Algorithm 2: Change Greedy
-    with open(PR4_exp_results_file, 'a') as fw:
+    with open(PR5_exp_results_file, 'a') as fw:
         fw.write("\nAlgorithm 2: Change Greedy\n")
     print("\nAlgorithm 2: Change Greedy")
 
     RUNEXPERIMENT(algs.ChangeGreedy, A_large, V5, 1, True, PR5_exp_results_file)
 
     # Algorithm 3: Change DP
-    with open(PR4_exp_results_file, 'a') as fw:
+    with open(PR5_exp_results_file, 'a') as fw:
         fw.write("\nAlgorithm 3: Change DP\n")
     print("\nAlgorithm 3: Change DP")
 
