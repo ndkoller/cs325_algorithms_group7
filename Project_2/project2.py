@@ -15,7 +15,7 @@ results_file = data_file[:-4] + 'change.txt'
 PR3_exp_results_file = 'PR3_ExperimentalResults.txt'
 PR7_exp_results_file = 'PR7_ExperimentalResults.txt'
 
-# Turn runs on by setting to 'True'
+# Turn runs on/off by setting to True/False
 run_file = True
 run_pr3 = True
 run_pr4 = False
@@ -172,7 +172,7 @@ if run_pr3:
         fw.write("\nAlgorithm 3: Change Dynamic Programming\n")
     print("\nAlgorithm 2: Change Dynamic Programming")
 
-RUNEXPERIMENT(algs.ChangeDP, N, VN, 1000, True, PR3_exp_results_file)
+    RUNEXPERIMENT(algs.ChangeDP, N, VN, 1000, True, PR3_exp_results_file)
 
 
 # Question 4 - VM1
@@ -258,8 +258,8 @@ if run_pr7:
             print_header = True
 
     # Algorithm 3: Change DP
-    if print_header:
-        with open(PR7_exp_results_file, 'a') as fw:
-            fw.write("\nAlgorithm 3: Change DP\n")
-        print("\nAlgorithm 3: Change DP")
-    RUNEXPERIMENT(algs.ChangeDP, target, den_array[:i], 15000, print_header, PR7_exp_results_file)
+        if print_header:
+            with open(PR7_exp_results_file, 'a') as fw:
+                fw.write("\nAlgorithm 3: Change DP\n")
+            print("\nAlgorithm 3: Change DP")
+        RUNEXPERIMENT(algs.ChangeDP, target, den_array[:i], 15000, print_header, PR7_exp_results_file)
