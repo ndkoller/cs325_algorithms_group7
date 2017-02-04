@@ -1,0 +1,7 @@
+Experimental Time Runs
+
+Algorithm 1: Change Slow
+
+Algorithm 2: Change Greedy
+
+Algorithm 3: Change DP
