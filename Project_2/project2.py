@@ -1,9 +1,9 @@
 # Import functions
 from datetime import datetime
-from random import *
 import p2algorithms as algs
 from itertools import zip_longest
 import sys
+
 
 # File names
 if len(sys.argv) == 1:

@@ -1,5 +1,3 @@
-import math
-
 # Algorithm 1: Enumeration
 # Helper function
 def change(target, coins, coins_list):
@@ -48,7 +46,7 @@ def ChangeGreedy(coins, target):
 
 # Algorithm 3: Change Dynamic Programming
 def ChangeDP(coins, target):
-    T = [math.inf]*(target+1)
+    T = [9999999999]*(target+1)
     R = [-1]*(target+1)
     T[0] = 0
     R[0] = -1
