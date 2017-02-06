@@ -4,7 +4,7 @@ Instructions:
 
 1. Run solutions on file only - arguments: filename
 	Command Line Entry:
-	python3 program2.python3 {yourfilename}.txt
+	python3 program2.py {yourfilename}.txt
 	
 	Result:
 	Runs solutions on the specified file
@@ -12,7 +12,7 @@ Instructions:
 
 2. Run solutions on file AND execute experimental runs - arguments: filename exp
 	Command Line Entry:
-	python3 program2.python3 {yourfilename}.txt exp
+	python3 program2.py {yourfilename}.txt exp
 	
 	Result:
 	Runs solutions on the specified file
@@ -23,7 +23,7 @@ Instructions:
 	
 3. Default - arguments: none
 	Command Line Entry:
-	python3 program2.python3
+	python3 program2.py
 	
 	Result:
 	Runs solutions on coins.txt
