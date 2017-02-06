@@ -3,26 +3,41 @@ from datetime import datetime
 import p2algorithms as algs
 from itertools import zip_longest
 import sys
+import os.path
 
 
-# File names
+# Turn runs on/off by setting to True/False
+run_file = True
+run_pr3 = False
+run_pr4 = False
+run_pr5 = False
+run_pr7 = False
+
+
+# Check program arguments
 if len(sys.argv) == 1:
-    data_file = 'correctnessTest.txt'  # for testing purposes
-else:
+    data_file = 'coins.txt'  # for testing purposes
+elif len(sys.argv) > 1:
     data_file = str(sys.argv[1])
+    if len(sys.argv) == 3:
+        if str(sys.argv[2]) == "exp":
+            print("Experimental runs turned on. Estimated execution time: 9 minutes")
+            run_pr3 = True
+            run_pr4 = True
+            run_pr5 = True
+            run_pr7 = True
+
+if not os.path.isfile(data_file):
+    run_file = False
+    print("No such file in directory!")
+
+#print("File exists:", os.path.isfile(data_file))
+
 results_file = data_file[:-4] + 'change.txt'
 PR3_exp_results_file = 'PR3_ExperimentalResults.txt'
 PR4_exp_results_file = 'PR4_ExperimentalResults.txt'
 PR5_exp_results_file = 'PR5_ExperimentalResults.txt'
 PR7_exp_results_file = 'PR7_ExperimentalResults.txt'
-
-# Turn runs on/off by setting to True/False
-run_file = True
-run_pr3 = True
-run_pr4 = True
-run_pr5 = True
-run_pr7 = True
-
 
 # Python Documentation Recipe to group file input
 def GROUPER(iterable, n, fillvalue=None):
@@ -34,13 +49,20 @@ def GROUPER(iterable, n, fillvalue=None):
 
 # Common code to write results to output file
 def WRITERESULTS(data, coincounts, totalcoins, fileobject):
+    lineprint = "";
     for ea in data:
         fileobject.write(str(ea) + "\t")
+        lineprint += "{}{}".format(ea, "\t")
+    print(lineprint)
     fileobject.write("\n")
+    lineprint = ""
     for ea in coincounts:
         fileobject.write(str(ea) + "\t")
+        lineprint += "{}{}".format(ea, "\t")
+    print(lineprint)
     fileobject.write("\n")
     fileobject.write(str(totalcoins) + "\n\n")
+    print("{}{}".format(totalcoins, "\n"))
 
 
 # Common code to time the algorithms
@@ -77,7 +99,8 @@ def RUNEXPERIMENT(alg, n_array, data, n_multiplier, print_header, output_file):
 '''
 
 if run_file:
-    print("\n******Solving Input File ******\nRunning Solutions...\n")
+    print("\n******Solving Input File ******")
+    print("Running Solutions on {}...\n".format(data_file))
     # Delete contents of test results file
     with open(results_file, 'w') as fw:
         fw.write("")
@@ -94,25 +117,22 @@ if run_file:
 
             # Append Enumeration results to 'results_file'
             with open(results_file, 'a') as fw:
+                fw.write("Algorithm 1: Change Slow\n")
+                print("Algorithm 1: Change Slow")
                 # Call Algorithm 1: ChangeSlow to get the max sub array and max sum
                 c, m = algs.ChangeSlow(data, dataTarget)
-                print("Algorithm 1: Change Slow\nc:", c, 'm:', m)
-
-                fw.write("Algorithm 1: Change Slow\n")
                 WRITERESULTS(data, c, m, fw)
-
-                # Call Algorithm 2: ChangeGreedy
-                c, m = algs.ChangeGreedy(data, dataTarget)
-                print("Algorithm 2: Change Greedy\nc:", c, 'm:', m)
 
                 fw.write("Algorithm 2: Change Greedy\n")
+                print("Algorithm 2: Change Greedy")
+                # Call Algorithm 2: ChangeGreedy
+                c, m = algs.ChangeGreedy(data, dataTarget)
                 WRITERESULTS(data, c, m, fw)
 
+                fw.write("Algorithm 3: Change DP\n")
+                print("Algorithm 3: Change DP")
                 # Call Algorithm 3: ChangeDP
                 c, m = algs.ChangeDP(data, dataTarget)
-                print("Algorithm 3: Change DP\nc:", c, 'm:', m)
-
-                fw.write("Algorithm 3: Change DP\n")
                 WRITERESULTS(data, c, m, fw)
 
 '''
